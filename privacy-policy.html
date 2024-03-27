@@ -8,20 +8,22 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '335227935746428');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
-/></noscript>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '335227935746428');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1" /></noscript>
 
 
 
@@ -104,8 +106,8 @@ src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
                     </div>
                     <h3>Luxurious 2 &amp; 3 BHK Apartments Starting At 79.99 Lacs* Onwards </h3>
                 </div>
-                <form class="form-content" id="dropEnquiry">
-                    <div id="note1"></div>
+                <form class="form-content" id="header-form">
+                    <div id="header-note"></div>
                     <div class="form-group">
                         <div class="name-cont">
                             <input type="text" class="form-control" placeholder="Name*" name="name">
@@ -140,7 +142,7 @@ src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
                             <textarea class="form-control" placeholder="Message" name="message"
                                 style="width: 100%;"></textarea>
                         </div>
-                        <input value="Submit" id="btnformone1" class="register-submit btn btn-primary" id="dropbtn"
+                        <input value="Submit" id="header-btn" class="register-submit btn btn-primary"
                             type="submit">
                     </div>
                 </form>
@@ -175,7 +177,7 @@ src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
                         Providers</strong>” includes entities which provide services to and to whom we
                     may
                     disclose your Data for a specific purpose pursuant to a written contract.</p>
-               
+
                 <p class="px-md-4 py-2 px-4 " style="text-align:justify ;">“<strong>User or You</strong>”
                     shall mean the natural person who accesses our website/pages or
                     Platform.</p>
@@ -344,7 +346,7 @@ src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
 
 
     </div>
-    
+
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 
@@ -418,57 +420,63 @@ src="https://www.facebook.com/tr?id=335227935746428&ev=PageView&noscript=1"
                 });
             }, 3000);
 
-            $("#dropEnquiry").submit(function () {
-                $("#btnformone1").text("Please Wait");
-                $('#btnformone1').attr('disabled', 'disabled');
-                var str = $(this).serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "contact-process.php",
-                    data: str,
-                    success: function (msg) {
-                        $('#btnformone1').removeAttr('disabled');
-                        $("#btnformone1").text("Submit");
-                        if (msg == 'OK') {
-                            result = '<p style="color:green; font-weight: 600;font-size: 18px;width:100%">Email Sent Successfully!<\/p>';
-                            $('#note1').delay(20000).fadeOut();
-                            $('#dropEnquiry')[0].reset();
-                            window.location.href = "thankyou.html";
-                        } else {
-                            result = msg;
-                        }
-                        $('#note1').html(result);
-                    }
-                });
-                return false;
-            });
-
-            $("#ModalForm").submit(function () {
-                $("#btnformone2").text("Please Wait");
-                $('#btnformone2').attr('disabled', 'disabled');
-                var str = $(this).serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "contact-process.php",
-                    data: str,
-                    success: function (msg) {
-                        $('#btnformone2').removeAttr('disabled');
-                        $("#btnformone2").text("Submit");
-                        if (msg == 'OK') {
-                            result = '<p style="color:green; font-weight: 600;font-size: 18px;width:100%">Email Sent Successfully!<\/p>';
-                            $('#note2').delay(20000).fadeOut();
-                            $('#ModalForm')[0].reset();
-                            window.location.href = "thankyou.html";
-                        } else {
-                            result = msg;
-                        }
-                        $('#note2').html(result);
-                    }
-                });
-                return false;
-            });
         });
     </script>
+
+
+<script>
+
+    function submitForm(formId, buttonId, noteId, redirectUrl) {
+        $(formId).submit(function (event) {
+            event.preventDefault();
+            $(buttonId).text("Please Wait");
+            $(buttonId).attr('disabled', 'disabled');
+
+            // Create an object to hold form data
+            var formData = {
+                name: $(formId + ' [name="name"]').val(),
+                email: $(formId + ' [name="email"]').val(),
+                phone: $(formId + ' [name="phone"]').val(),
+                message: $(formId + ' [name="message"]').val(),
+                subject: "Villagio - 3 BHK Homes" // Change this to your desired subject value
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "https://us-central1-email-js-1a09b.cloudfunctions.net/emailjs/submit-form",
+                data: formData,
+                success: function (msg) {
+                    $(buttonId).removeAttr('disabled');
+                    $(buttonId).text("Submit");
+                    if (msg === 'Email sent successfully') {
+                        result = '<p style="color:green; font-weight: 600;font-size: 18px;width:100%">Email Sent Successfully!</p>';
+                        $(noteId).delay(20000).fadeOut();
+                        $(formId)[0].reset();
+                        // if (redirectUrl) {
+                        //     window.location.href = redirectUrl;
+                        // }
+                    } else {
+                        result = msg;
+                    }
+                    $(noteId).html(result);
+                },
+                error: function () {
+                    $(buttonId).removeAttr('disabled');
+                    $(buttonId).text("Submit");
+                    $(noteId).html('<p style="color:red; font-weight: 600;font-size: 18px;width:100%">Error sending email!</p>');
+                }
+            });
+            return false;
+        });
+    }
+
+    $(document).ready(function () {
+        submitForm("#header-form", "#header-btn", "#header-note");
+        // submitForm("#footer-form", "#footer-button", "#note");
+        submitForm("#enquiry_form_footer", "#popup-button", "#note3");
+    });
+
+</script>
 
 </body>
 
